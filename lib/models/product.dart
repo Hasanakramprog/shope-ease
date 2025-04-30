@@ -23,18 +23,27 @@ class Product {
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-      id: json['id'],
+      id: int.tryParse(json['id'].toString()) ?? 0,
       title: json['title'],
-      price: json['price'].toDouble(),
+      price: _parseDouble(json['price']),
       description: json['description'],
       category: json['category'],
       images: json['images'] != null ? List<String>.from(json['images']) : [],
-      rating: json['rating'].toDouble(),
+      rating: _parseDouble(json['rating']),
       thumbnail: json['thumbnail'], // <<-- add this
       // storeId: json['storeId'],
       
     );
   }
+  static double _parseDouble(dynamic value) {
+  if (value == null) return 0.0;
+  if (value is double) return value;
+  if (value is int) return value.toDouble();
+  if (value is String) {
+    return double.tryParse(value) ?? 0.0;
+  }
+  return 0.0;
+}
   Map<String, dynamic> toJson() {
     return {
       'id': id,

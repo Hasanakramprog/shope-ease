@@ -213,7 +213,8 @@ class _StoreHomeScreenState extends State<StoreHomeScreen> {
       });
       
       final productsList = await _apiService.getProducts();
-      final categoriesList = await _apiService.getCategories();
+      // final categoriesList = await _apiService.getCategories();
+      final categoriesList = await _apiService.getCategories(storeId: widget.store.id);
       
       setState(() {
         products = productsList;
@@ -246,8 +247,10 @@ class _StoreHomeScreenState extends State<StoreHomeScreen> {
       if (category == null) {
         // filteredProducts = await _apiService.getProductsByStore(widget.store.id);
         // filteredProducts = await _apiService.getProductsByCategory(widget.store.id);
-        filteredProducts = await _apiService.getProductsByCategory("Beauty"
-        );
+        // filteredProducts = await _apiService.getProductsByCategory("Beauty"
+        // );
+        filteredProducts=await _apiService.getProducts();
+
       } else {
         filteredProducts = await _apiService.getProductsByCategory(
           category,
